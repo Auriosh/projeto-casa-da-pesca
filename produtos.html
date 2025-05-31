@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos - Casa da Pesca Mucambo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FFF7FA; /* Rosa bem clarinho de fundo geral */
+        }
+        /* Cores inspiradas no novo logo */
+        :root {
+            --primary-pink: #D81B60; /* Rosa forte do logo */
+            --light-pink-bg: #FCE4EC; /* Rosa claro do fundo do logo */
+            --accent-pink-hover: #AD1457; /* Rosa mais escuro para hover */
+            --dark-text: #1F2937;
+            --medium-text: #4B5563;
+        }
+        .section-title {
+            font-size: 1.875rem; /* 30px */
+            font-weight: 700;
+            margin-bottom: 1.5rem; /* 24px */
+            text-align: center;
+            color: var(--primary-pink);
+        }
+        .product-card {
+            border: 1px solid #F48FB1; /* Borda rosa claro */
+            border-radius: 0.75rem; /* 12px */
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px -8px rgba(216, 27, 96, 0.2);
+        }
+        .product-card-content {
+            padding: 1.5rem; /* 24px */
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .placeholder-img {
+            background-color: #F8BBD0; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--primary-pink);
+            font-size: 0.875rem; /* 14px */
+            min-height: 160px; /* Reduzido para caber mais cards */
+            height: 160px;
+            border-bottom: 1px solid #F48FB1;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.75rem; 
+            border-radius: 0.5rem; /* 8px */
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-primary {
+            background-color: var(--primary-pink);
+            color: white;
+            border: 2px solid var(--primary-pink);
+        }
+        .btn-primary:hover {
+            background-color: var(--accent-pink-hover);
+            border-color: var(--accent-pink-hover);
+        }
+        .btn-secondary { 
+            background-color: transparent;
+            color: var(--primary-pink);
+            border: 2px solid var(--primary-pink);
+        }
+        .btn-secondary:hover {
+            background-color: var(--primary-pink);
+            color: white;
+        }
+        header {
+            background-color: white;
+            border-bottom: 3px solid var(--primary-pink);
+        }
+        nav a.active-menu-item, #mobile-menu a.active-menu-item { 
+            background-color: var(--light-pink-bg) !important;
+            color: var(--primary-pink) !important;
+            font-weight: 700;
+        }
+         nav a:hover, #mobile-menu a:hover {
+            background-color: var(--light-pink-bg) !important;
+            color: var(--accent-pink-hover) !important;
+        }
+        footer {
+            background-color: var(--primary-pink);
+            color: white;
+        }
+        footer a {
+            color: #FCE4EC; 
+        }
+        footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+        .filter-button {
+            background-color: white;
+            color: var(--medium-text);
+            border: 1px solid #E5E7EB; /* gray-200 */
+            padding: 0.5rem 1rem; /* Ajuste no padding */
+            font-size: 0.875rem; /* Ajuste no tamanho da fonte */
+        }
+        .filter-button.active, .filter-button:hover {
+            background-color: var(--light-pink-bg);
+            color: var(--primary-pink);
+            border-color: var(--primary-pink);
+            font-weight: 600;
+        }
+        .product-price {
+            color: var(--primary-pink);
+            font-size: 1.25rem; /* 20px - Reduzido para caber melhor */
+            font-weight: 700;
+            margin-top: 0.5rem; 
+            margin-bottom: 0.75rem; 
+        }
+        .product-card h3 {
+             font-size: 1.125rem; /* 18px - Reduzido */
+             margin-bottom: 0.25rem;
+        }
+        .product-card p.text-gray-600 {
+            font-size: 0.8rem; /* Reduzido */
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <a href="index.html" aria-label="Página Inicial da Casa da Pesca">
+                        <img class="h-14 w-auto sm:h-16" src="https://storage.googleapis.com/gemini-prod-us-west1-uploads/uploaded_images/2024/5/26/19/53/2/ce9c4051-70c9-4ea7-9830-1ad9a0095649_A.png" alt="Logotipo da Casa da Pesca">
+                    </a>
+                </div>
+                <nav class="hidden md:flex space-x-2">
+                    <a href="index.html" class="text-gray-700 px-3 py-2 rounded-md text-sm font-medium">INÍCIO</a>
+                    <a href="produtos.html" class="active-menu-item text-gray-700 px-3 py-2 rounded-md text-sm font-medium">PRODUTOS</a>
+                    <a href="index.html#quemsomos" class="text-gray-700 px-3 py-2 rounded-md text-sm font-medium">QUEM SOMOS</a>
+                    <a href="index.html#dicas" class="text-gray-700 px-3 py-2 rounded-md text-sm font-medium">DICAS DA CASA</a>
+                    <a href="index.html#contato" class="text-gray-700 px-3 py-2 rounded-md text-sm font-medium">CONTATO</a>
+                </nav>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-gray-800 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-pink-500" aria-expanded="false">
+                        <span class="sr-only">Abrir menu principal</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="index.html" class="text-gray-700 block px-3 py-2 rounded-md text-base font-medium">INÍCIO</a>
+                <a href="produtos.html" class="active-menu-item text-gray-700 block px-3 py-2 rounded-md text-base font-medium">PRODUTOS</a>
+                <a href="index.html#quemsomos" class="text-gray-700 block px-3 py-2 rounded-md text-base font-medium">QUEM SOMOS</a>
+                <a href="index.html#dicas" class="text-gray-700 block px-3 py-2 rounded-md text-base font-medium">DICAS DA CASA</a>
+                <a href="index.html#contato" class="text-gray-700 block px-3 py-2 rounded-md text-base font-medium">CONTATO</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <section id="lista-produtos">
+            <h1 class="section-title text-3xl sm:text-4xl mb-10">Nossos Produtos</h1>
+
+            <div id="filters" class="mb-10 flex flex-wrap justify-center gap-2 sm:gap-3">
+                <button class="btn filter-button active" data-category="Todos">Todos</button>
+                <button class="btn filter-button" data-category="Tarrafas">Tarrafas</button>
+                <button class="btn filter-button" data-category="Panos de Tarrafa">Panos de Tarrafa</button>
+                <button class="btn filter-button" data-category="Galões">Galões/Redes</button>
+                <button class="btn filter-button" data-category="Varas de Bambu">Varas de Bambu</button>
+                <button class="btn filter-button" data-category="Linhas">Linhas</button>
+                <button class="btn filter-button" data-category="Anzóis">Anzóis</button>
+                <button class="btn filter-button" data-category="Chumbadas">Chumbadas</button>
+                <button class="btn filter-button" data-category="Cordas">Cordas</button>
+                <button class="btn filter-button" data-category="Boias">Boias</button>
+                <button class="btn filter-button" data-category="Fitas de Galão">Fitas de Galão</button>
+                <button class="btn filter-button" data-category="Destorcedores">Destorcedores</button>
+                <button class="btn filter-button" data-category="Acessórios">Acessórios</button>
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                <div class="product-card" data-category-item="Acessórios">
+                    <div class="placeholder-img">[Imagem de Landuá]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Landuá</h3>
+                            <p class="text-gray-600">Acessório prático para pesca.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 35,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Tarrafas">
+                    <div class="placeholder-img">[Imagem de Tarrafa Malha 2]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Tarrafa Malha 2</h3>
+                            <p class="text-gray-600">Especial para camarão.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 200,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Tarrafas">
+                    <div class="placeholder-img">[Imagem de Tarrafa Malha 2,5]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Tarrafa Malha 2,5</h3>
+                            <p class="text-gray-600">Piabeira, ideal para piabas.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 150,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Tarrafas">
+                    <div class="placeholder-img">[Imagem de Tarrafa Malha 4]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Tarrafa Malha 4</h3>
+                            <p class="text-gray-600">Tarrafa resistente malha 4.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 400,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Tarrafas">
+                    <div class="placeholder-img">[Imagem de Tarrafa Malha 5]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Tarrafa Malha 5</h3>
+                            <p class="text-gray-600">Tarrafa resistente malha 5.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 350,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Tarrafas">
+                    <div class="placeholder-img">[Imagem de Tarrafa Malha 7]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Tarrafa Malha 7</h3>
+                            <p class="text-gray-600">Tarrafa resistente malha 7.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 500,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Tarrafas">
+                    <div class="placeholder-img">[Imagem de Tarrafa Malha 8]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Tarrafa Malha 8</h3>
+                            <p class="text-gray-600">Tarrafa resistente malha 8.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 400,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Tarrafas">
+                    <div class="placeholder-img">[Imagem de Tarrafa Malha 9]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Tarrafa Malha 9</h3>
+                            <p class="text-gray-600">Tarrafa resistente malha 9.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 400,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Panos de Tarrafa">
+                    <div class="placeholder-img">[Imagem de Pano de Tarrafa 2,5 (100)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Pano de Tarrafa 2,5 (100)</h3>
+                            <p class="text-gray-600">Malha 2,5, altura 100. Para confecção.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">Preço sob consulta</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Panos de Tarrafa">
+                    <div class="placeholder-img">[Imagem de Pano de Tarrafa 2 (100)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Pano de Tarrafa 2 (100)</h3>
+                            <p class="text-gray-600">Malha 2, altura 100. Para confecção.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">Preço sob consulta</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 3]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 3</h3>
+                            <p class="text-gray-600">Piabeira, ideal para piabas.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 140,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 4]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 4</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 4.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 130,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 5]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 5</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 5.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 130,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 6]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 6</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 6.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 100,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 7]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 7</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 7.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 100,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 8]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 8</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 8.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 100,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 9]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 9</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 9.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 100,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 10 Fio 0,20]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 10 Fio 0,20</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 10, fio 0,20mm.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 100,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 10 Fio 0,25]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 10 Fio 0,25</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 10, fio 0,25mm.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 110,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 11]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 11</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 11.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 110,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 12]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 12</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 12.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 110,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 13]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 13</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 13.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 110,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 14]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 14</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 14.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 110,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 15]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 15</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 15.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 110,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Galões">
+                    <div class="placeholder-img">[Imagem de Galão/Rede Malha 16]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Galão/Rede Malha 16</h3>
+                            <p class="text-gray-600">Rede de pesca tipo galão, malha 16.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 110,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Cordas">
+                    <div class="placeholder-img">[Imagem de Corda para Pesca (Ref. 0.100)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Corda para Pesca (Ref. 0.100)</h3>
+                            <p class="text-gray-600">Corda resistente para diversas finalidades.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 10,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Cordas">
+                    <div class="placeholder-img">[Imagem de Corda para Tarrafa (2,50m)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Corda para Tarrafa (2,50m)</h3>
+                            <p class="text-gray-600">Ideal para reparo ou montagem de tarrafas.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 1,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Linhas">
+                    <div class="placeholder-img">[Imagem de Linha de Pesca 0,25mm (Carretel)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Linha de Pesca 0,25mm (Carretel)</h3>
+                            <p class="text-gray-600">Linha monofilamento 0,25mm.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 35,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Linhas">
+                    <div class="placeholder-img">[Imagem de Linha de Pesca 0,40mm (Carretel)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Linha de Pesca 0,40mm (Carretel)</h3>
+                            <p class="text-gray-600">Linha monofilamento 0,40mm.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 35,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Linhas">
+                    <div class="placeholder-img">[Imagem de Linha de Pesca 0,30mm (100m)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Linha de Pesca 0,30mm (100m)</h3>
+                            <p class="text-gray-600">Carretel com 100 metros, fio 0,30mm.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 10,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Linhas">
+                    <div class="placeholder-img">[Imagem de Linha de Pesca 0,40mm (100m)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Linha de Pesca 0,40mm (100m)</h3>
+                            <p class="text-gray-600">Carretel com 100 metros, fio 0,40mm.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 10,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Boias">
+                    <div class="placeholder-img">[Imagem de Pacote de Boia]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Pacote de Boia</h3>
+                            <p class="text-gray-600">Boias para diversas modalidades de pesca.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 10,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Chumbadas">
+                    <div class="placeholder-img">[Imagem de Chumbada (Ref. 1)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chumbada (Ref. 1)</h3>
+                            <p class="text-gray-600">Chumbada para pesca, referência 1.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 38,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Chumbadas">
+                    <div class="placeholder-img">[Imagem de Chumbada (Ref. 2)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chumbada (Ref. 2)</h3>
+                            <p class="text-gray-600">Chumbada para pesca, referência 2.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 38,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Chumbadas">
+                    <div class="placeholder-img">[Imagem de Chumbada (Ref. 3)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chumbada (Ref. 3)</h3>
+                            <p class="text-gray-600">Chumbada para pesca, referência 3.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 38,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="product-card" data-category-item="Chumbadas">
+                    <div class="placeholder-img">[Imagem de Chumbada (Ref. 4)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chumbada (Ref. 4)</h3>
+                            <p class="text-gray-600">Chumbada para pesca, referência 4.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 38,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="product-card" data-category-item="Chumbadas">
+                    <div class="placeholder-img">[Imagem de Chumbada (Ref. 5)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chumbada (Ref. 5)</h3>
+                            <p class="text-gray-600">Chumbada para pesca, referência 5.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 38,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="product-card" data-category-item="Chumbadas">
+                    <div class="placeholder-img">[Imagem de Chumbada (Ref. 6)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chumbada (Ref. 6)</h3>
+                            <p class="text-gray-600">Chumbada para pesca, referência 6.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 38,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="product-card" data-category-item="Chumbadas">
+                    <div class="placeholder-img">[Imagem de Chumbada (Ref. 7)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chumbada (Ref. 7)</h3>
+                            <p class="text-gray-600">Chumbada para pesca, referência 7.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 38,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="product-card" data-category-item="Chumbadas">
+                    <div class="placeholder-img">[Imagem de Chumbada (Ref. 8)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chumbada (Ref. 8)</h3>
+                            <p class="text-gray-600">Chumbada para pesca, referência 8.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 38,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="product-card" data-category-item="Chumbadas">
+                    <div class="placeholder-img">[Imagem de Chumbada (Ref. 9)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chumbada (Ref. 9)</h3>
+                            <p class="text-gray-600">Chumbada para pesca, referência 9.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 38,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="product-card" data-category-item="Chumbadas">
+                    <div class="placeholder-img">[Imagem de Chumbada (Ref. 10)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Chumbada (Ref. 10)</h3>
+                            <p class="text-gray-600">Chumbada para pesca, referência 10.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 38,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Fitas de Galão">
+                    <div class="placeholder-img">[Imagem de Fita de Galão Fio 0,20]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Fita de Galão Fio 0,20</h3>
+                            <p class="text-gray-600">Fita para rede/galão, fio 0,20mm.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 28,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Fitas de Galão">
+                    <div class="placeholder-img">[Imagem de Fita de Galão Fio 0,25]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Fita de Galão Fio 0,25</h3>
+                            <p class="text-gray-600">Fita para rede/galão, fio 0,25mm.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 35,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Anzóis">
+                    <div class="placeholder-img">[Imagem de Anzol Pequeno]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Anzol Pequeno</h3>
+                            <p class="text-gray-600">Anzol de tamanho pequeno, ideal para peixes menores.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 0,50</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Anzóis">
+                    <div class="placeholder-img">[Imagem de Anzol Artificial Pequeno]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Anzol Artificial Pequeno</h3>
+                            <p class="text-gray-600">Isca artificial pequena com anzol.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 4,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Anzóis">
+                    <div class="placeholder-img">[Imagem de Anzol Artificial Grande]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Anzol Artificial Grande</h3>
+                            <p class="text-gray-600">Isca artificial grande com anzol.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 10,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Anzóis">
+                    <div class="placeholder-img">[Imagem de Anzol (Ref. 1)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Anzol (Ref. 1)</h3>
+                            <p class="text-gray-600">Anzol para pesca, referência 1.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 1,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Anzóis">
+                    <div class="placeholder-img">[Imagem de Anzol (Ref. 5)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Anzol (Ref. 5)</h3>
+                            <p class="text-gray-600">Anzol para pesca, referência 5.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 1,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Anzóis">
+                    <div class="placeholder-img">[Imagem de Anzol (Ref. 6)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Anzol (Ref. 6)</h3>
+                            <p class="text-gray-600">Anzol para pesca, referência 6.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 1,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Destorcedores">
+                    <div class="placeholder-img">[Imagem de Destorcedor (Ref. 5)]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Destorcedor (Ref. 5)</h3>
+                            <p class="text-gray-600">Destorcedor para pesca, referência 5.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">R$ 4,00</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card" data-category-item="Varas de Bambu">
+                    <div class="placeholder-img">[Imagem de Vara de Bambu]</div>
+                    <div class="product-card-content">
+                        <div>
+                            <h3 class="font-semibold text-gray-800">Vara de Bambu</h3>
+                            <p class="text-gray-600">Vara de bambu tradicional para pesca.</p>
+                        </div>
+                        <div>
+                            <p class="product-price">Preço sob consulta</p>
+                            <button class="btn btn-primary text-xs sm:text-sm w-full mt-1">VER DETALHES</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-10">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-4">
+                <a href="#" class="text-pink-100 hover:text-white mx-2"><span class="sr-only">Facebook</span><svg fill="currentColor" class="w-7 h-7 inline-block" viewBox="0 0 24 24"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.64 9.5 5.45V7.46H6.13v4.27h3.37V23.5h4.22V11.73h3.77l.6-4.27z"></path></svg></a>
+                <a href="#" class="text-pink-100 hover:text-white mx-2"><span class="sr-only">Instagram</span><svg fill="currentColor" class="w-7 h-7 inline-block" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.059 1.689.073 4.948.073 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg></a>
+                <a href="#" class="text-pink-100 hover:text-white mx-2"><span class="sr-only">WhatsApp</span><svg fill="currentColor" class="w-7 h-7 inline-block" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01s-.521.074-.795.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.289.173-1.413z"></path></svg></a>
+            </div>
+            <p class="text-sm">© <span id="currentYear"></span> Casa da Pesca - Mucambo. Todos os direitos reservados.</p>
+            <p class="text-xs mt-1">
+                <a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Script para o menu mobile
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if(mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true' || false;
+                mobileMenuButton.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.querySelectorAll('svg').forEach(icon => icon.classList.toggle('hidden'));
+            });
+        }
+        
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Script para filtros de categoria de produtos
+        const filterButtons = document.querySelectorAll('#filters .filter-button');
+        const productItems = document.querySelectorAll('#product-grid .product-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                const selectedCategory = this.getAttribute('data-category');
+                productItems.forEach(item => {
+                    const itemCategory = item.getAttribute('data-category-item');
+                    if (selectedCategory === 'Todos' || itemCategory === selectedCategory) {
+                        item.style.display = 'flex'; 
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        document.querySelectorAll('a[href^="#"], a[href^="index.html#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith("#") || (href.startsWith("index.html#") && window.location.pathname.includes("index.html"))) { 
+                    e.preventDefault();
+                    const targetId = href.substring(href.indexOf('#')); 
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        const headerOffset = document.querySelector('header').offsetHeight || 70;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
