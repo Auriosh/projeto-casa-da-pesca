@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         html {
-            scroll-behavior: smooth; /* Habilita scroll suave globalmente */
+            scroll-behavior: smooth; 
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -20,6 +20,8 @@
             --accent-pink-hover: #AD1457;
             --dark-text: #1F2937;
             --medium-text: #4B5563;
+            --whatsapp-green: #25D366;
+            --whatsapp-green-hover: #1DAE54;
         }
         .section-title {
             font-size: 1.875rem; 
@@ -80,21 +82,40 @@
             border-bottom: 1px solid #F48FB1;
             border-radius: 0.5rem;
         }
-         #product-detail-price {
-            color: var(--primary-pink); 
-            font-size: 2rem; 
-            font-weight: 700;
-        }
         #variation-select {
             background-color: #fff;
-            border: 1px solid #F48FB1; /* Borda rosa claro */
+            border: 1px solid #F48FB1; 
             color: var(--dark-text);
-            padding: 0.625rem; /* Ajuste no padding para Tailwind (10px ~ p-2.5) */
-            border-radius: 0.375rem; /* rounded-md */
+            padding: 0.625rem; 
+            border-radius: 0.375rem; 
         }
         #variation-select:focus {
             border-color: var(--primary-pink);
-            box-shadow: 0 0 0 1px var(--primary-pink); /* Simula ring do Tailwind */
+            box-shadow: 0 0 0 1px var(--primary-pink); 
+        }
+        .whatsapp-button {
+            display: inline-block;
+            background-color: var(--whatsapp-green);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+        .whatsapp-button:hover {
+            background-color: var(--whatsapp-green-hover);
+        }
+        .whatsapp-button svg {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+            width: 1.25em; /* Ajustado para melhor proporção */
+            height: 1.25em;
         }
     </style>
 </head>
@@ -169,7 +190,9 @@
                         <div class="lg:w-3/5 w-full">
                             <h3 id="product-detail-name" class="text-2xl sm:text-3xl font-bold text-[var(--primary-pink)] mb-3">Nome do Produto</h3>
                             <p id="product-detail-info" class="text-gray-700 mb-4 text-base sm:text-lg leading-relaxed">Detalhes específicos do produto...</p>
-                            <p id="product-detail-price" class="text-3xl sm:text-4xl font-bold mt-4">R$ 0,00</p>
+                            <div id="product-price-button-container">
+                                {/* O botão do WhatsApp será inserido aqui pelo JS */}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -192,20 +215,22 @@
     </footer>
 
     <script>
-        // Estrutura de dados dos produtos. Categoria "Panos de Tarrafa" movida para o final.
         const productData = {
             "Tarrafas": {
-                description: "A tarrafa é uma rede de pesca circular com pesos em sua borda, arremessada de forma habilidosa para que se abra completamente antes de cair na água, cobrindo uma área e capturando os peixes que ali se encontram. É uma arte de pesca tradicional e eficaz para diversos tipos de peixes, variando em tamanho de malha e fio conforme a espécie alvo.",
+                description: "A tarrafa é uma rede de pesca circular com pesos em sua borda, arremessada de forma habilidosa para que se abra completamente antes de cair na água, cobrindo uma área e capturando os peixes que ali se encontram. É uma arte de pesca tradicional e eficaz para diversos tipos de peixes, variando em tamanho de malha e fio conforme a espécie alvo. Para panos de reposição ou confecção, consulte nossa seção 'Panos de Tarrafa'.",
                 productBaseName: "Tarrafa",
                 imagePlaceholderBase: "[Imagem Genérica de Tarrafa]",
                 variations: [
-                    { id: "tarrafa-m2", variationName: "Malha 2", price: "R$ 200,00", details: "Especial para camarão, com malha fina para captura eficiente." },
-                    { id: "tarrafa-m25", variationName: "Malha 2,5", price: "R$ 150,00", details: "Conhecida como piabeira, ideal para captura de piabas e pequenos peixes." },
-                    { id: "tarrafa-m4", variationName: "Malha 4", price: "R$ 400,00", details: "Tarrafa resistente com malha 4, versátil para diferentes espécies." },
-                    { id: "tarrafa-m5", variationName: "Malha 5", price: "R$ 350,00", details: "Tarrafa resistente com malha 5, adequada para peixes de porte médio." },
-                    { id: "tarrafa-m7", variationName: "Malha 7", price: "R$ 500,00", details: "Tarrafa com malha 7, para peixes maiores e pesca em locais específicos." },
-                    { id: "tarrafa-m8", variationName: "Malha 8", price: "R$ 400,00", details: "Tarrafa com malha 8, robusta e ideal para peixes de maior porte." },
-                    { id: "tarrafa-m9", variationName: "Malha 9", price: "R$ 400,00", details: "Tarrafa com malha 9, para captura de peixes grandes em águas abertas." }
+                    { id: "tarrafa-m2", variationName: "Malha 2 (20mm / ~40mm esticada)", price: "R$ 200,00", details: "Serventia: Camarão, Lambari, Pequenos Peixes/Iscas." },
+                    { id: "tarrafa-m25", variationName: "Malha 2,5 (25mm / ~50mm esticada)", price: "R$ 150,00", details: "Serventia: Piabeira, Lambari, Pequenos Peixes/Iscas." },
+                    { id: "tarrafa-m3", variationName: "Malha 3 (30mm / ~60mm esticada, Fio ~0.40mm)", price: "Preço sob consulta", details: "Serventia: Piau, Tilápia pequena, Camarões maiores, pequenos peixes forrageiros." },
+                    { id: "tarrafa-m35", variationName: "Malha 3.5 (35mm / ~70mm esticada, Fio ~0.50mm)", price: "Preço sob consulta", details: "Serventia: Tilápias médias-pequenas, Piaus maiores, Carpas pequenas, Sardinhas, Manjubas." },
+                    { id: "tarrafa-m4", variationName: "Malha 4 (40mm / ~80mm esticada)", price: "R$ 400,00", details: "Serventia: Tilápia, Tambiú, Sardinha, Parati, peixes de porte similar." },
+                    { id: "tarrafa-m5", variationName: "Malha 5 (50mm / ~100mm esticada)", price: "R$ 350,00", details: "Serventia: Tilápia, Tainha pequena, Parati, peixes de porte similar." },
+                    { id: "tarrafa-m6", variationName: "Malha 6 (60mm / ~120mm esticada, Fio ~0.50mm)", price: "Preço sob consulta", details: "Serventia: Pacu, Carpa, Traíra, Tilápia grande, Corvina." },
+                    { id: "tarrafa-m7", variationName: "Malha 7 (70mm / ~140mm esticada)", price: "R$ 500,00", details: "Serventia: Tilápias maiores, Pacu pequeno/médio, Carpa média, Tainha, peixes de porte médio." },
+                    { id: "tarrafa-m8", variationName: "Malha 8 (80mm / ~160mm esticada)", price: "R$ 400,00", details: "Serventia: Peixes de maior porte, como Tainhas grandes, Curimbas médios." },
+                    { id: "tarrafa-m9", variationName: "Malha 9 (90mm / ~180mm esticada)", price: "R$ 400,00", details: "Serventia: Peixes grandes como Tainhas grandes, Curimbas grandes, Carpas grandes." }
                 ]
             },
             "Galões": { 
@@ -213,21 +238,25 @@
                 productBaseName: "Galão", 
                 imagePlaceholderBase: "[Imagem Genérica de Galão]",
                 variations: [
-                    { id: "galao-m3", variationName: "Malha 3", price: "R$ 140,00", details: "Piabeira, malha 3, ideal para captura de piabas e peixes pequenos." },
-                    { id: "galao-m4", variationName: "Malha 4", price: "R$ 130,00", details: "Rede de pesca tipo galão, malha 4. Versátil para diversos peixes." },
-                    { id: "galao-m5", variationName: "Malha 5", price: "R$ 130,00", details: "Rede de pesca tipo galão, malha 5. Para peixes de porte médio." },
-                    { id: "galao-m6", variationName: "Malha 6", price: "R$ 100,00", details: "Rede de pesca tipo galão, malha 6." },
-                    { id: "galao-m7", variationName: "Malha 7", price: "R$ 100,00", details: "Rede de pesca tipo galão, malha 7." },
-                    { id: "galao-m8", variationName: "Malha 8", price: "R$ 100,00", details: "Rede de pesca tipo galão, malha 8." },
-                    { id: "galao-m9", variationName: "Malha 9", price: "R$ 100,00", details: "Rede de pesca tipo galão, malha 9." },
-                    { id: "galao-m10f20", variationName: "Malha 10 (Fio 0,20mm)", price: "R$ 100,00", details: "Rede de pesca tipo galão, malha 10, fio 0,20mm." },
-                    { id: "galao-m10f25", variationName: "Malha 10 (Fio 0,25mm)", price: "R$ 110,00", details: "Rede de pesca tipo galão, malha 10, fio 0,25mm. Maior resistência." },
-                    { id: "galao-m11", variationName: "Malha 11", price: "R$ 110,00", details: "Rede de pesca tipo galão, malha 11." },
-                    { id: "galao-m12", variationName: "Malha 12", price: "R$ 110,00", details: "Rede de pesca tipo galão, malha 12. Para peixes maiores." },
-                    { id: "galao-m13", variationName: "Malha 13", price: "R$ 110,00", details: "Rede de pesca tipo galão, malha 13." },
-                    { id: "galao-m14", variationName: "Malha 14", price: "R$ 110,00", details: "Rede de pesca tipo galão, malha 14." },
-                    { id: "galao-m15", variationName: "Malha 15", price: "R$ 110,00", details: "Rede de pesca tipo galão, malha 15." },
-                    { id: "galao-m16", variationName: "Malha 16", price: "R$ 110,00", details: "Rede de pesca tipo galão, malha 16. Para grandes peixes." }
+                    { id: "galao-m2", variationName: "Malha 2 (20mm / ~40mm esticada, Fio ~0.20mm)", price: "Preço sob consulta", details: "Serventia: Lambari e outros peixes muito pequenos, iscas vivas." },
+                    { id: "galao-m25", variationName: "Malha 2.5 (25mm / ~50mm esticada)", price: "Preço sob consulta", details: "Serventia: Peixes pequenos (maiores que lambaris miúdos), como pequenas sardinhas, manjuba, ou outros peixes forrageiros de porte similar." },
+                    { id: "galao-m3", variationName: "Malha 3 (30mm / ~60mm esticada)", price: "R$ 140,00", details: "Serventia: Piabeira, Lambari, Tainha pequena, Tilápia pequena, Piau pequeno, Bagre pequeno." },
+                    { id: "galao-m4", variationName: "Malha 4 (40mm / ~80mm esticada)", price: "R$ 130,00", details: "Serventia: Cascudo, Pintado pequeno, Manjuba, Sardinha, Paratis pequenos." },
+                    { id: "galao-m5", variationName: "Malha 5 (50mm / ~100mm esticada)", price: "R$ 130,00", details: "Serventia: Parati, Tainha pequena/média, Tilápia média, Salteira." },
+                    { id: "galao-m6", variationName: "Malha 6 (60mm / ~120mm esticada, Fio ~0.35-0.60mm)", price: "R$ 100,00", details: "Serventia: Tilápia, Pescada, Guaivira, Corvina, Sororoca, Cações, Tambaqui juvenil (bocó)." },
+                    { id: "galao-m7", variationName: "Malha 7 (70mm / ~140mm esticada)", price: "R$ 100,00", details: "Serventia: Traíra, Porquinho, Tilápia, Piau, Corvina, Cações." },
+                    { id: "galao-m8", variationName: "Malha 8 (80mm / ~160mm esticada)", price: "R$ 100,00", details: "Serventia: Corvina, Porquinho, Tilápia, Piauçu, Robalo, Cação Martelo, Piramutaba." },
+                    { id: "galao-m9", variationName: "Malha 9 (90mm / ~180mm esticada)", price: "R$ 100,00", details: "Serventia: Tilápia grande, Carpa média/grande, Curimba, Pintado/Surubim, Dourado, Piramutaba." },
+                    { id: "galao-m95", variationName: "Malha 9.5 (95mm / ~190mm esticada)", price: "Preço sob consulta", details: "Serventia: Peixes de grande porte similares aos das malhas 90mm e 100mm (Pintado, Surubim, Dourado, grandes bagres)." },
+                    { id: "galao-m10f20", variationName: "Malha 10 (100mm / ~200mm esticada, Fio 0.20mm)", price: "R$ 100,00", details: "Serventia: Peixes de grande porte como Pintado/Surubim, Dourado, grandes bagres amazônicos, potencialmente Pirarucu. Fio 0.20mm oferece menor visibilidade e maior flexibilidade." },
+                    { id: "galao-m10f25", variationName: "Malha 10 (100mm / ~200mm esticada, Fio 0.25mm)", price: "R$ 110,00", details: "Serventia: Peixes de grande porte como Pintado/Surubim, Dourado, grandes bagres amazônicos, potencialmente Pirarucu. Fio 0.25mm oferece maior resistência." },
+                    { id: "galao-m105", variationName: "Malha 10.5 (105mm / ~210mm esticada)", price: "Preço sob consulta", details: "Serventia: Peixes de grande porte similares aos das malhas 100mm e 110mm (Pintado, Surubim, Dourado, grandes bagres)." },
+                    { id: "galao-m11", variationName: "Malha 11 (110mm / ~220mm esticada)", price: "R$ 110,00", details: "Serventia: Peixes de grande porte como Pintado/Surubim, Dourado, Pescada Escamuda." },
+                    { id: "galao-m12", variationName: "Malha 12 (120mm / ~240mm esticada)", price: "R$ 110,00", details: "Serventia: Peixes de grande porte como Pintado/Surubim, Dourado, grandes bagres." },
+                    { id: "galao-m13", variationName: "Malha 13 (130mm / ~260mm esticada)", price: "R$ 110,00", details: "Serventia: Peixes de grande porte como Pintado/Surubim, Dourado, Matrinxãs, Pescadas, Robalos." },
+                    { id: "galao-m14", variationName: "Malha 14 (140mm / ~280mm esticada)", price: "R$ 110,00", details: "Serventia: Peixes de grande porte como Pintado/Surubim, Dourado." },
+                    { id: "galao-m15", variationName: "Malha 15 (150mm / ~300mm esticada, Fio ~0.80-1.2mm multi)", price: "R$ 110,00", details: "Serventia: Peixes de porte excepcional como grandes tubarões (Cação-mangona, Cação-martelo), grandes bagres, Pirarucu." },
+                    { id: "galao-m16", variationName: "Malha 16 (160mm / ~320mm esticada)", price: "R$ 110,00", details: "Serventia: Peixes de porte excepcional, como os citados para malha 150mm, incluindo Pacu grande e Tambaqui." }
                 ]
             },
             "Varas de Bambu": {
@@ -235,7 +264,7 @@
                 productBaseName: "Vara de Bambu",
                 imagePlaceholderBase: "[Imagem de Vara de Bambu]",
                 variations: [
-                    { id: "vara-bambu-unica", variationName: "Tradicional", price: "Preço sob consulta", details: "Vara de bambu tradicional para pesca, diversos tamanhos disponíveis." }
+                    { id: "vara-bambu-unica", variationName: "Tradicional", price: "Preço sob consulta", details: "Serventia: Vara de pesca simples e tradicional para pesca de barranco, represas, rios de baixa correnteza; para peixes de pequeno e médio porte (Lambari, Tilápia, Mandi, Cará, Saicanga)." }
                 ]
             },
             "Linhas": {
@@ -243,10 +272,10 @@
                 productBaseName: "Linha de Pesca",
                 imagePlaceholderBase: "[Imagem Genérica de Linha de Pesca]",
                 variations: [
-                    { id: "linha-025-carr", variationName: "0,25mm (Carretel)", price: "R$ 35,00", details: "Linha monofilamento 0,25mm em carretel. Boa para peixes menores." },
-                    { id: "linha-040-carr", variationName: "0,40mm (Carretel)", price: "R$ 35,00", details: "Linha monofilamento 0,40mm em carretel. Resistente para peixes médios." },
-                    { id: "linha-030-100m", variationName: "0,30mm (100m)", price: "R$ 10,00", details: "Carretel com 100 metros, fio monofilamento 0,30mm." },
-                    { id: "linha-040-100m", variationName: "0,40mm (100m)", price: "R$ 10,00", details: "Carretel com 100 metros, fio monofilamento 0,40mm." }
+                    { id: "linha-025-carr", variationName: "Fio 0,25mm (Carretel)", price: "R$ 35,00", details: "Serventia: Peixes pequenos e médios (Lambari, Piau, Saicanga, Tilápia pequena). Resistência aproximada: 2-5.7 kg. (Preço por carretel. Consulte preço por metro)." },
+                    { id: "linha-040-carr", variationName: "Fio 0,40mm (Carretel)", price: "R$ 35,00", details: "Serventia: Peixes médios a grandes (Traíra, Matrinxã, Pacu, Carpa, Dourado pequeno). Resistência aproximada: 7.9-18.5 kg. (Preço por carretel. Consulte preço por metro)." },
+                    { id: "linha-030-100m", variationName: "Fio 0,30mm (100m)", price: "R$ 10,00", details: "Serventia: Peixes médios (Traíra, Matrinxã, Pacu, Carpa, Tilápia média/grande). Resistência aproximada: 5-12 kg. (Preço por carretel de 100m)." },
+                    { id: "linha-040-100m", variationName: "Fio 0,40mm (100m)", price: "R$ 10,00", details: "Serventia: Mesma aplicação do Fio 0,40mm (Carretel), em embalagem de 100m. Para peixes médios a grandes. (Preço por carretel de 100m)." }
                 ]
             },
             "Anzóis": { 
@@ -254,29 +283,29 @@
                 productBaseName: "Anzol",
                 imagePlaceholderBase: "[Imagem Genérica de Anzol]",
                 variations: [
-                    { id: "anzol-pequeno", variationName: "Pequeno (Avulso)", price: "R$ 0,50", details: "Anzol de tamanho pequeno, ideal para peixes menores ou iscas delicadas." },
-                    { id: "anzol-art-peq", variationName: "Artificial Pequeno", price: "R$ 4,00", details: "Isca artificial pequena já montada com anzol, pronta para uso." },
-                    { id: "anzol-art-grd", variationName: "Artificial Grande", price: "R$ 10,00", details: "Isca artificial grande com anzol, para atrair predadores maiores." },
-                    { id: "anzol-ref1", variationName: "Referência 1 (Avulso)", price: "R$ 1,00", details: "Anzol para pesca, referência 1. Verificar tipo e tamanho." },
-                    { id: "anzol-ref5", variationName: "Referência 5 (Avulso)", price: "R$ 1,00", details: "Anzol para pesca, referência 5. Verificar tipo e tamanho." },
-                    { id: "anzol-ref6", variationName: "Referência 6 (Avulso)", price: "R$ 1,00", details: "Anzol para pesca, referência 6. Verificar tipo e tamanho." }
+                    { id: "anzol-pequeno", variationName: "Pequeno", price: "R$ 0,50", details: "Serventia: Lambaris, Piaus pequenos, Saicangas, pequenos peixes em geral, iscas pequenas." },
+                    { id: "anzol-art-peq", variationName: "Artificial Pequeno", price: "R$ 4,00", details: "Serventia: Isca artificial para predadores de pequeno porte (Pequenos Tucunarés, Saicangas, Jacundás, Tilápias predadoras)." },
+                    { id: "anzol-art-grd", variationName: "Artificial Grande", price: "R$ 10,00", details: "Serventia: Isca artificial para predadores de médio a grande porte (Tucunarés maiores, Dourados, Trairões)." },
+                    { id: "anzol-n1", variationName: "Número 1 (Ex: Chinu/Maruseigo)", price: "R$ 1,00", details: "Serventia: Modelo Chinu: para Pacu, Tambacu, Piauçu, Carpa. Modelo Maruseigo: para Curimba, Catfish, Tilápia grande." },
+                    { id: "anzol-n5", variationName: "Número 5 (Ex: Chinu/Maruseigo)", price: "R$ 1,00", details: "Serventia: Modelo Chinu: para Lambari, Tilápia pequena, Cará. Modelo Maruseigo: para peixes de boca pequena a média (Piau, Mandi)." },
+                    { id: "anzol-n6", variationName: "Número 6 (Ex: Chinu/Maruseigo)", price: "R$ 1,00", details: "Serventia: Modelo Chinu: para Lambari, outros peixes pequenos. Modelo Maruseigo: para peixes pequenos, pesca delicada." }
                 ]
             },
             "Chumbadas": {
                 description: "Pesos de chumbo de diferentes formatos (oliva, pirâmide, pingo) e gramaturas, utilizados para afundar a linha e a isca na água, permitindo alcançar a profundidade desejada e manter a isca na zona de alimentação dos peixes.",
-                productBaseName: "Chumbada",
-                imagePlaceholderBase: "[Imagem Genérica de Chumbada]",
+                productBaseName: "Chumbada Oliva",
+                imagePlaceholderBase: "[Imagem Genérica de Chumbada Oliva]",
                 variations: [
-                    { id: "chumb-ref1", variationName: "Referência 1", price: "R$ 38,00", details: "Chumbada para pesca, referência 1. (Preço pode ser por KG ou pacote)." },
-                    { id: "chumb-ref2", variationName: "Referência 2", price: "R$ 38,00", details: "Chumbada para pesca, referência 2." },
-                    { id: "chumb-ref3", variationName: "Referência 3", price: "R$ 38,00", details: "Chumbada para pesca, referência 3." },
-                    { id: "chumb-ref4", variationName: "Referência 4", price: "R$ 38,00", details: "Chumbada para pesca, referência 4." },
-                    { id: "chumb-ref5", variationName: "Referência 5", price: "R$ 38,00", details: "Chumbada para pesca, referência 5." },
-                    { id: "chumb-ref6", variationName: "Referência 6", price: "R$ 38,00", details: "Chumbada para pesca, referência 6." },
-                    { id: "chumb-ref7", variationName: "Referência 7", price: "R$ 38,00", details: "Chumbada para pesca, referência 7." },
-                    { id: "chumb-ref8", variationName: "Referência 8", price: "R$ 38,00", details: "Chumbada para pesca, referência 8." },
-                    { id: "chumb-ref9", variationName: "Referência 9", price: "R$ 38,00", details: "Chumbada para pesca, referência 9." },
-                    { id: "chumb-ref10", variationName: "Referência 10", price: "R$ 38,00", details: "Chumbada para pesca, referência 10." }
+                    { id: "chumb-n1", variationName: "Número 1 (~4g)", price: "R$ 38,00/kg", details: "Serventia: Pesca leve, varas telescópicas, pequenos peixes. (Aprox. R$ 0,15 por unidade)" },
+                    { id: "chumb-n2", variationName: "Número 2 (~5g)", price: "R$ 38,00/kg", details: "Serventia: Pesca leve, pequenos peixes, águas calmas. (Aprox. R$ 0,19 por unidade)" },
+                    { id: "chumb-n3", variationName: "Número 3 (~13.2g)", price: "R$ 38,00/kg", details: "Serventia: Pesca leve a média. (Aprox. R$ 0,50 por unidade)" },
+                    { id: "chumb-n4", variationName: "Número 4 (~9g)", price: "R$ 38,00/kg", details: "Serventia: Pesca média, varas de molinete/carretilha. (Aprox. R$ 0,34 por unidade)" },
+                    { id: "chumb-n5", variationName: "Número 5 (~14g)", price: "R$ 38,00/kg", details: "Serventia: Pesca média, arremessos mais longos. (Aprox. R$ 0,53 por unidade)" },
+                    { id: "chumb-n6", variationName: "Número 6 (~30g)", price: "R$ 38,00/kg", details: "Serventia: Pesca média a pesada, correntezas leves. (Aprox. R$ 1,14 por unidade)" },
+                    { id: "chumb-n7", variationName: "Número 7 (~50g)", price: "R$ 38,00/kg", details: "Serventia: Pesca média a pesada, correntezas moderadas. (Aprox. R$ 1,90 por unidade)" },
+                    { id: "chumb-n8", variationName: "Número 8 (~37g)", price: "R$ 38,00/kg", details: "Serventia: Pesca pesada, fundos e correntezas. (Aprox. R$ 1,41 por unidade)" },
+                    { id: "chumb-n9", variationName: "Número 9 (~50g)", price: "R$ 38,00/kg", details: "Serventia: Pesca pesada, grandes profundidades ou correntezas fortes. (Aprox. R$ 1,90 por unidade)" },
+                    { id: "chumb-n10", variationName: "Número 10 (~80g)", price: "R$ 38,00/kg", details: "Serventia: Pesca extra pesada, grandes profundidades, mar, grandes rios. (Aprox. R$ 3,04 por unidade)" }
                 ]
             },
             "Cordas": {
@@ -284,8 +313,8 @@
                 productBaseName: "Corda",
                 imagePlaceholderBase: "[Imagem Genérica de Corda]",
                 variations: [
-                    { id: "corda-pesca-ref100", variationName: "Para Pesca (Ref. 0.100)", price: "R$ 10,00", details: "Corda resistente (Ref. 0.100) para diversas finalidades na pesca." },
-                    { id: "corda-tarrafa-2m50", variationName: "Para Tarrafa (2,50m)", price: "R$ 1,00", details: "Corda específica com 2,50m, ideal para reparo ou montagem de tarrafas." }
+                    { id: "corda-geral-10mm", variationName: "Nº 0.100 (Polietileno, ~10mm)", price: "R$ 10,00", details: "Serventia: Uso geral em pesca: amarração de embarcações, confecção de poitas para redes e espinhéis, atividades náuticas." },
+                    { id: "corda-tarrafa-2mm5", variationName: "Para Tarrafa (Nº 2,50, ~2.5mm)", price: "R$ 1,00", details: "Serventia: Confecção e reparo (entralhe) de tarrafas e redes, cabo de arremesso para tarrafas menores." }
                 ]
             },
             "Boias": {
@@ -293,16 +322,16 @@
                 productBaseName: "Boia",
                 imagePlaceholderBase: "[Imagem de Pacote de Boia]",
                 variations: [
-                    { id: "boia-pacote", variationName: "Pacote Sortido", price: "R$ 10,00", details: "Pacote com boias de tamanhos e formatos sortidos para diversas modalidades de pesca." }
+                    { id: "boia-pacote", variationName: "Pacote Sortido", price: "R$ 10,00", details: "Serventia: Flutuação para redes de pesca (galões/espera), espinhéis, linhas; Sinalização de equipamentos de pesca." }
                 ]
             },
             "Fitas de Galão": {
                 description: "Fitas específicas, geralmente de material sintético resistente, utilizadas na montagem, entralhe e reparo de galões (redes de espera), garantindo a durabilidade e eficiência da rede.",
-                productBaseName: "Fita de Galão",
+                productBaseName: "Fita de Galão (Fio Nylon)",
                 imagePlaceholderBase: "[Imagem Genérica de Fita de Galão]",
                 variations: [
-                    { id: "fita-galao-f20", variationName: "Fio 0,20mm", price: "R$ 28,00", details: "Fita para rede/galão, confeccionada com fio 0,20mm." },
-                    { id: "fita-galao-f25", variationName: "Fio 0,25mm", price: "R$ 35,00", details: "Fita para rede/galão, confeccionada com fio 0,25mm, mais resistente." }
+                    { id: "fita-galao-f20", variationName: "Fio 0,20mm", price: "R$ 28,00", details: "Serventia: Fio de nylon 0.20mm para tecer/reparar malhas ('galões') de redes de emalhar, ou para costuras/acabamentos finos na tralha. Para redes de peixes menores ou que exigem material discreto/flexível." },
+                    { id: "fita-galao-f25", variationName: "Fio 0,25mm", price: "R$ 35,00", details: "Serventia: Fio de nylon 0.25mm, similar ao 0.20mm mas com maior resistência para redes de peixes um pouco maiores ou maior durabilidade na confecção/reparo de malhas/tralhas." }
                 ]
             },
             "Destorcedores": {
@@ -310,24 +339,24 @@
                 productBaseName: "Destorcedor",
                 imagePlaceholderBase: "[Imagem de Destorcedor]",
                  variations: [
-                    { id: "destorcedor-ref5", variationName: "Referência 5", price: "R$ 4,00", details: "Destorcedor para pesca, referência 5. Pacote ou unidade." }
+                    { id: "destorcedor-n5", variationName: "Número 5", price: "R$ 4,00", details: "Serventia: Uso geral em montagens de pesca para evitar torção da linha; para peixes de pequeno a médio porte. Resistência aproximada de 21 kg." }
                 ]
             },
-            "Acessórios": {
-                description: "Uma variedade de itens e ferramentas que auxiliam o pescador em suas jornadas, tornando a pescaria mais prática e eficiente. Inclui desde puçás (landuás) até caixas organizadoras e outros utensílios.",
-                productBaseName: "Acessório",
-                imagePlaceholderBase: "[Imagem Genérica de Acessório de Pesca]",
-                variations: [
-                    { id: "acessorio-landua", variationName: "Landuá", price: "R$ 35,00", details: "Acessório prático para pesca, também conhecido como puçá, utilizado para retirar o peixe da água com segurança." }
-                ]
-            },
-            "Panos de Tarrafa": { // Movido para o final
+            "Panos de Tarrafa": { 
                 description: "Panos de rede de alta qualidade, utilizados para a confecção artesanal ou reparo de tarrafas. Disponíveis em diversas malhas e alturas para atender às necessidades específicas de cada pescador e tipo de pescaria.",
                 productBaseName: "Pano de Tarrafa",
                 imagePlaceholderBase: "[Imagem Genérica de Pano de Tarrafa]",
                 variations: [
-                    { id: "pano-m25-h100", variationName: "Malha 2,5 (Altura 100)", price: "Preço sob consulta", details: "Ideal para confecção de tarrafas piabeiras." },
-                    { id: "pano-m2-h100", variationName: "Malha 2 (Altura 100)", price: "Preço sob consulta", details: "Perfeito para tarrafas de camarão." }
+                    { id: "pano-m2", variationName: "Malha 2 (20mm)", price: "Preço sob consulta", details: "Serventia: Material para confecção/reparo de tarrafas para Camarão, Lambari, Pequenos Peixes/Iscas." },
+                    { id: "pano-m25-h100", variationName: "Malha 2,5 (25mm, Altura 100)", price: "Preço sob consulta", details: "Serventia: Material para confecção/reparo de tarrafas para Piabeira, Lambari, Pequenos Peixes/Iscas." }
+                ]
+            },
+            "Acessórios": { // Movido para o final
+                description: "Uma variedade de itens e ferramentas que auxiliam o pescador em suas jornadas, tornando a pescaria mais prática e eficiente. Inclui desde puçás (landuás) até caixas organizadoras e outros utensílios.",
+                productBaseName: "Acessório",
+                imagePlaceholderBase: "[Imagem Genérica de Acessório de Pesca]",
+                variations: [
+                    { id: "acessorio-landua", variationName: "Landuá", price: "R$ 35,00", details: "Serventia: Armadilha de pesca (cesto/puçá) para captura de peixes e crustáceos em rios, lavados ou despesca de currais." }
                 ]
             }
         };
@@ -346,18 +375,16 @@
             const productImagePlaceholderEl = document.getElementById('product-image-placeholder');
             const productDetailNameEl = document.getElementById('product-detail-name');
             const productDetailInfoEl = document.getElementById('product-detail-info');
-            const productDetailPriceEl = document.getElementById('product-detail-price');
+            const productPriceButtonContainerEl = document.getElementById('product-price-button-container'); // Novo container
             
-            // Define a ordem desejada das categorias para o menu lateral
             const categoryOrder = [
                 "Tarrafas", "Galões", "Varas de Bambu", "Linhas", "Anzóis", 
                 "Chumbadas", "Cordas", "Boias", "Fitas de Galão", 
-                "Destorcedores", "Acessórios", "Panos de Tarrafa" // "Panos de Tarrafa" é o último
+                "Destorcedores", "Panos de Tarrafa", "Acessórios" // Ordem atualizada
             ];
 
-            // Popular o menu lateral de categorias na ordem definida
             categoryOrder.forEach(categoryName => {
-                if (productData[categoryName]) { // Verifica se a categoria existe nos dados
+                if (productData[categoryName]) { 
                     const listItem = document.createElement('li');
                     const link = document.createElement('a');
                     link.href = '#'; 
@@ -374,7 +401,6 @@
                 }
             });
 
-
             function displayCategory(categoryName) {
                 const categoryData = productData[categoryName];
                 if (!categoryData) return;
@@ -384,9 +410,8 @@
                 categoryDescriptionEl.textContent = categoryData.description;
                 
                 const headerOffset = document.querySelector('header').offsetHeight || 0;
-                // O target para o scroll é o próprio 'category-info'
                 const elementPosition = categoryInfoEl.getBoundingClientRect().top + window.pageYOffset;
-                const offsetPosition = elementPosition - headerOffset - 20; // 20px de margem do topo
+                const offsetPosition = elementPosition - headerOffset - 20; 
 
                 window.scrollTo({
                     top: offsetPosition,
@@ -409,9 +434,7 @@
                     categoryData.variations.forEach(variation => {
                         const option = document.createElement('option');
                         let optionText = variation.variationName;
-                        if (variation.price && variation.price !== "Preço sob consulta" && parseFloat(variation.price.replace('R$ ', '').replace(',', '.')) > 1.00) {
-                             optionText += ` (${variation.price})`;
-                        }
+                        // Não mostrar preço no dropdown para manter limpo, o preço aparecerá no botão
                         option.textContent = optionText;
                         option.value = variation.id; 
                         variationSelectEl.appendChild(option);
@@ -437,7 +460,7 @@
                         variationSelectEl.value = categoryData.variations[0].id;
                         variationSelectEl.dispatchEvent(new Event('change')); 
                     } else {
-                         variationSelectEl.value = ""; // Garante que o default "Selecione..." apareça para >1 variação
+                         variationSelectEl.value = ""; 
                     }
 
                 } else {
@@ -451,7 +474,28 @@
                 productImagePlaceholderEl.textContent = product.imagePlaceholder || '[Imagem Indisponível]';
                 productDetailNameEl.textContent = product.name;
                 productDetailInfoEl.textContent = product.details;
-                productDetailPriceEl.textContent = product.price;
+                
+                productPriceButtonContainerEl.innerHTML = ''; // Limpa o container do botão
+                const whatsappButton = document.createElement('a');
+                whatsappButton.classList.add('whatsapp-button');
+                whatsappButton.target = "_blank"; // Abrir em nova aba
+
+                const phoneNumber = "5588994327952"; // Número sem formatação para o link
+                let messageText = "";
+                let buttonText = "";
+
+                if (product.price && product.price.toLowerCase() !== "preço sob consulta") {
+                    messageText = `Olá, gostaria de saber mais sobre o produto ${product.name} que custa ${product.price}.`;
+                    buttonText = `Consultar ${product.price}`;
+                } else {
+                    messageText = `Olá, gostaria de saber o preço do produto ${product.name}.`;
+                    buttonText = "Consultar Preço";
+                }
+                
+                whatsappButton.href = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(messageText)}`;
+                whatsappButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.8 0-67.6-9.5-97.8-26.7l-7.1-4.2-69.8 18.3L72 359.2l-4.7-7.1c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg> ${buttonText}`;
+                productPriceButtonContainerEl.appendChild(whatsappButton);
+
                 productDetailDisplayEl.style.display = 'block';
 
                 if (window.innerWidth < 768) { 
